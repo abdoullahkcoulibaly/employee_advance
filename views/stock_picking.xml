@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_form_view" model="ir.ui.view">
+        <field name="name">stock.picking.form.view</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group/group//div[hasclass('o_td_label')]" position="before">
+                <field name="is_employee_advance" widget="boolean"/>
+                <field name="employee_id" invisible="is_employee_advance == False"/>
+            </xpath>
+
+            <xpath expr="//notebook//page[@name='operations']//field[@name='product_uom_qty']" position="after">
+                <field name="standard_price" column_invisible="parent.is_employee_advance == False"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_picking_form_inherit_mrp_custom" model="ir.ui.view">
+        <field name="name">view.picking.form.inherit.mrp.custom</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="gedispa_access_rights.view_picking_form_inherit_mrp"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet//group//group//field[@name='truck_number']" position="attributes">
+                <attribute name="invisible">is_employee_advance == True</attribute>
+            </xpath>
+            <xpath expr="//form//sheet//group//group//field[@name='permit_number']" position="attributes">
+                <attribute name="invisible">is_employee_advance == True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
